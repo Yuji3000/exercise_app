@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_18_173246) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_18_181749) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,6 +18,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_18_173246) do
     t.integer "lbs"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_body_weights_on_user_id"
   end
 
   create_table "exercises", force: :cascade do |t|
@@ -46,15 +48,28 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_18_173246) do
     t.integer "reps"
     t.integer "sets"
     t.integer "weight_lbs"
+    t.bigint "workout_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "exercise_id"
+    t.index ["exercise_id"], name: "index_workout_entries_on_exercise_id"
+    t.index ["workout_id"], name: "index_workout_entries_on_workout_id"
   end
 
   create_table "workouts", force: :cascade do |t|
     t.string "name"
     t.string "day_of_week"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "program_id"
+    t.index ["program_id"], name: "index_workouts_on_program_id"
+    t.index ["user_id"], name: "index_workouts_on_user_id"
   end
 
+  add_foreign_key "body_weights", "users"
+  add_foreign_key "workout_entries", "exercises"
+  add_foreign_key "workout_entries", "workouts"
+  add_foreign_key "workouts", "programs"
+  add_foreign_key "workouts", "users"
 end
