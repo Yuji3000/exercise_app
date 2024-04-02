@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe WorkoutEntry, type: :model do
   describe 'relationships' do
@@ -9,6 +9,6 @@ RSpec.describe WorkoutEntry, type: :model do
   describe 'validations' do
     it {should validate_presence_of(:reps)}
     it {should validate_presence_of(:sets)}
-    it {should validate_presence_of(:weight_lbs)}
+    it {should validate_presence_of(:weight)}
   end
 end

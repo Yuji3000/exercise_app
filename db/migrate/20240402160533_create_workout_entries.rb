@@ -3,9 +3,10 @@ class CreateWorkoutEntries < ActiveRecord::Migration[7.0]
     create_table :workout_entries do |t|
       t.integer :reps
       t.integer :sets
-      t.integer :weight_lbs
+      t.float :weight
+      t.references :workout, null: false, foreign_key: true
+      t.references :exercise, null: false, foreign_key: true
 
-      t.references :workout, foreign_key: true
       t.timestamps
     end
   end
