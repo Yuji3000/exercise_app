@@ -10,17 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_18_181749) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_02_160533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "body_weights", force: :cascade do |t|
-    t.integer "lbs"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.index ["user_id"], name: "index_body_weights_on_user_id"
-  end
 
   create_table "exercises", force: :cascade do |t|
     t.string "name"
@@ -36,10 +28,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_18_181749) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_programs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "program_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["program_id"], name: "index_user_programs_on_program_id"
+    t.index ["user_id"], name: "index_user_programs_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.integer "height_inches"
+    t.integer "body_weight"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -47,11 +49,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_18_181749) do
   create_table "workout_entries", force: :cascade do |t|
     t.integer "reps"
     t.integer "sets"
-    t.integer "weight_lbs"
-    t.bigint "workout_id"
+    t.float "weight"
+    t.bigint "workout_id", null: false
+    t.bigint "exercise_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "exercise_id"
     t.index ["exercise_id"], name: "index_workout_entries_on_exercise_id"
     t.index ["workout_id"], name: "index_workout_entries_on_workout_id"
   end
@@ -59,17 +61,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_18_181749) do
   create_table "workouts", force: :cascade do |t|
     t.string "name"
     t.string "day_of_week"
-    t.bigint "user_id"
+    t.string "notes"
+    t.bigint "program_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "program_id"
     t.index ["program_id"], name: "index_workouts_on_program_id"
-    t.index ["user_id"], name: "index_workouts_on_user_id"
   end
 
-  add_foreign_key "body_weights", "users"
+  add_foreign_key "user_programs", "programs"
+  add_foreign_key "user_programs", "users"
   add_foreign_key "workout_entries", "exercises"
   add_foreign_key "workout_entries", "workouts"
   add_foreign_key "workouts", "programs"
-  add_foreign_key "workouts", "users"
 end

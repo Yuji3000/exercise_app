@@ -1,6 +1,7 @@
 class WorkoutEntry < ApplicationRecord
-  belongs_to :exercise
   belongs_to :workout
-  validates :reps, :sets, :weight_lbs, :presence => true
-  validates :reps, :sets, :weight_lbs, :numericality => true
+  belongs_to :exercise
+
+  validates :reps, :sets, :weight, :presence => true
+  validates :reps, :sets, :weight, :numericality => true
 end

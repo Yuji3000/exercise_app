@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  has_many :body_weights
-  has_many :workouts
-  validates :name, :email, :height_inches, :presence => true
-  validates :height_inches, :numericality => true
+  has_many :user_programs
+
+  validates :name, :email, :height_inches, :body_weight, :presence => true
+  validates :height_inches, :body_weight, :numericality => true
 end
