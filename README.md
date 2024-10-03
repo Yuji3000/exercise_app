@@ -42,6 +42,11 @@ Possible next steps:
   - [Pry](https://github.com/pry/pry-rails)
   - [Figaro](https://github.com/laserlemon/figaro)
 
+
+## Schema
+<img src="app/assets/images/schema.png" alt="RSpec" width=auto height=auto>
+
+
 # App flow
 
 - TBD

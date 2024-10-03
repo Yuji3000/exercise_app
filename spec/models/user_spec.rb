@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'relationships' do
     it {should have_many(:user_programs)}
+    it {should have_many(:workouts).through(:programs)}
+    it {should have_many(:programs).through(:user_programs)}
   end
 
   describe 'validations' do
